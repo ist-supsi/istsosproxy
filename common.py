@@ -2,10 +2,11 @@
 
 import sys
 import logging
-from mptools.frameworks.py4web.controller import CORS
+# from mptools.frameworks.py4web.controller import CORS
 from . import settings
 
 from py4web import request
+from py4web.utils.cors import CORS
 from py4web.core import Fixture
 from py4web.core import HTTP
 
@@ -27,7 +28,7 @@ for item in settings.LOGGERS:
     logger.addHandler(handler)
 
 
-cors = CORS(settings.ALLOWED_ORIGINS)
+cors = CORS(origin=settings.ALLOWED_ORIGINS)
 
 class CheckIn(Fixture):
     """docstring for CheckIn."""
