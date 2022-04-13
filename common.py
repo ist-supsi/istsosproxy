@@ -37,7 +37,7 @@ class CheckIn(Fixture):
         super(CheckIn, self).__init__()
         self.origins = origin.split(',')
 
-    def on_request(self):
+    def on_request(self, context=None):
         current_origin = request.environ.get('HTTP_ORIGIN')
         if not any(map(lambda o: o==current_origin, self.origins)):
             logger.info(f'Current origin {current_origin} not allowed.')
