@@ -39,6 +39,10 @@ class IstsosAuth(object):
         response = self()
         return response.json()['access_token']
 
+def test():
+    istsos = IstsosAuth()
+    token = istsos.get_token()
+    print(token)
 
 if __name__ == '__main__':
     istsos = IstsosAuth()

@@ -28,21 +28,21 @@ for item in settings.LOGGERS:
     logger.addHandler(handler)
 
 
-cors = CORS(origin=settings.ALLOWED_ORIGINS)
+cors = CORS(origin='*')
 
-class CheckIn(Fixture):
-    """docstring for CheckIn."""
+# class CheckIn(Fixture):
+#     """docstring for CheckIn."""
+#
+#     def __init__(self, origin='http://localhost'):
+#         super(CheckIn, self).__init__()
+#         self.origins = origin.split(',')
+#
+#     def on_request(self, context=None):
+#         current_origin = request.environ.get('HTTP_ORIGIN')
+#         if not any(map(lambda o: o==current_origin, self.origins)):
+#             logger.info(f'Current origin {current_origin} not allowed.')
+#             raise HTTP(403)
+#         else:
+#             logger.debug(f'Check passed for current origin {current_origin}.')
 
-    def __init__(self, origin='http://localhost'):
-        super(CheckIn, self).__init__()
-        self.origins = origin.split(',')
-
-    def on_request(self, context=None):
-        current_origin = request.environ.get('HTTP_ORIGIN')
-        if not any(map(lambda o: o==current_origin, self.origins)):
-            logger.info(f'Current origin {current_origin} not allowed.')
-            raise HTTP(403)
-        else:
-            logger.debug(f'Check passed for current origin {current_origin}.')
-
-checkin = CheckIn(origin=settings.ALLOWED_ORIGINS)
+# checkin = CheckIn(origin=settings.ALLOWED_ORIGINS)

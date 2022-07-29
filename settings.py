@@ -16,7 +16,7 @@ ISTSOS_SERVICES = 'demo'
 ISTSOS_USERNAME = 'test'
 ISTSOS_PASSWORD = 'test'
 
-ALLOWED_ORIGINS = 'http://localhost:8080'
+ALLOWED_ORIGINS = 'http://localhost:8080,http://172.20.0.3:8080'
 
 # try import private settings
 try:
