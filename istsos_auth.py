@@ -3,14 +3,13 @@
 from . import settings
 import requests
 
-DEFAULT_USERNAME = settings.ISTSOS_USERNAME
-DEFAULT_PASSWORD = settings.ISTSOS_PASSWORD
-
+# Courtesy of: https://stackoverflow.com/a/1794540/1039510
+join_url_path = lambda *pieces :'/'.join(s.strip('/') for s in pieces)
 
 class IstsosAuth(object):
     """docstring for IstsosAuth."""
 
-    url = 'https://istsos.ddns.net/auth/realms/istsos/protocol/openid-connect/token'
+    url = None
 
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -21,7 +20,7 @@ class IstsosAuth(object):
         'client_id': 'istsos-istsos'
     }
 
-    def __init__(self, username=DEFAULT_USERNAME, password=DEFAULT_PASSWORD):
+    def __init__(self, username, password):
         super(IstsosAuth, self).__init__()
         self.args = dict(self.DEFAULTS, username=username, password=password)
 
@@ -38,6 +37,33 @@ class IstsosAuth(object):
     def get_token(self):
         response = self()
         return response.json()['access_token']
+
+class IstsosCeresioAuth(IstsosAuth):
+    """ """
+
+    url = join_url_path(settings.ISTSOS_CERESIO_BASEURL, settings.ISTSOS_CERESIO_AUTH_ENDPOINT)
+
+    def __init__(self, username=settings.ISTSOS_CERESIO_USERNAME, password=settings.ISTSOS_CERESIO_PASSWORD):
+        super(IstsosCeresioAuth, self).__init__(username, password)
+
+
+class IstsosVerbanoAuth(IstsosAuth):
+    """ """
+
+    url = join_url_path(settings.ISTSOS_VERBANO_BASEURL, settings.ISTSOS_VERBANO_AUTH_ENDPOINT)
+
+    def __init__(self, username=settings.ISTSOS_VERBANO_USERNAME, password=settings.ISTSOS_VERBANO_PASSWORD):
+        super(IstsosVerbanoAuth, self).__init__(username, password)
+
+
+class IstsosLarioAuth(IstsosAuth):
+    """ """
+
+    url = join_url_path(settings.ISTSOS_LARIO_BASEURL, settings.ISTSOS_LARIO_AUTH_ENDPOINT)
+
+    def __init__(self, username=settings.ISTSOS_LARIO_USERNAME, password=settings.ISTSOS_LARIO_PASSWORD):
+        super(IstsosLarioAuth, self).__init__(username, password)
+
 
 def test():
     istsos = IstsosAuth()

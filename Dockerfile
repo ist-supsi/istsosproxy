@@ -16,17 +16,20 @@ RUN apt update && apt install -y git python3 python3-pip memcached python3-psyco
 RUN service memcached restart
 
 RUN groupadd -r $user && useradd -m -r -g $user $user
+# RUN groupadd -g 1000 -r $user && useradd -m -u 1000 -g 1000 -r $user
 
 RUN python3 -m pip install -U py4web ujson
 
 USER $user
 
-RUN cd /home/$user/ && py4web setup --yes apps
+RUN cd /home/$user/ && mkdir apps && touch apps/__init__.py
+# py4web setup --yes apps
 
 # TODO: con una cartella condivisa potrebbe non essere necessario copiare la repo
 COPY . /home/$user/apps/$BACKENDAPP
 
-RUN python3 -m pip install -U -r /home/$user/apps/$BACKENDAPP/requirements.txt
+COPY ./requirements.txt /home/$user/
+RUN python3 -m pip install -U -r /home/$user/requirements.txt
 
 RUN cd /home/$user/ && \
     if [ $password=="none" ]; then echo "no admin"; else py4web set_password < "$password"; fi
