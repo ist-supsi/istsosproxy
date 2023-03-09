@@ -77,6 +77,19 @@ class IstsosLarioAuth(IstsosAuth):
     ):
         super(IstsosLarioAuth, self).__init__(username, password)
 
+class IstsosVareseAuth(IstsosAuth):
+    """ """
+
+    url = join_url_path(
+        settings.ISTSOS_VARESE_BASEURL, settings.ISTSOS_VARESE_AUTH_ENDPOINT
+    )
+
+    def __init__(
+        self,
+        username=settings.ISTSOS_VARESE_USERNAME,
+        password=settings.ISTSOS_VARESE_PASSWORD,
+    ):
+        super(IstsosVareseAuth, self).__init__(username, password)
 
 def test():
     # istsos = IstsosLarioAuth()
